@@ -1,23 +1,21 @@
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
-
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
+
+Plug 'ludovicchabant/vim-gutentags'
+" Plug 'szw/vim-tags'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-easytags'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp' 
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'ncm2/nvim-typescript', {'do': './install.sh'}
-Plug 'ObserverOfTime/ncm2-jc2', {'for': ['java', 'jsp']}
-Plug 'artur-shaik/vim-javacomplete2', {'for': ['java', 'jsp']}
-" Plug 'dense-analysis/ale'
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp' 
+" Plug 'ncm2/ncm2-tern',  {'do': }
 Plug 'jiangmiao/auto-pairs'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'vim-airline/vim-airline'
@@ -51,7 +49,8 @@ nnoremap <leader>; A;<esc>
 nnoremap <leader>ev :vsplit ~/.config/nvim/init.vim<cr>
 nnoremap <leader>sv :source ~/.config/nvim/init.vim<cr>
 nnoremap <c-p> :Files<cr>
-nmap <c-a> :NERDTreeToggle<CR>
+nnoremap <c-f> :Ag<space><cr>
+nmap <c-b> :NERDTreeToggle<cr>
 
 " Shortcuts for split navigation
 map <C-h> <C-w>h
@@ -64,23 +63,21 @@ map <leader>l :bn<cr>
 " Adding an empty line below, above and below with insert
 nmap <leader>j o<Esc>k
 nmap <leader>k O<Esc>j
-nmap oo A<CR>
 
+"Moving line up and down
+nmap <A-j> ddph 
+nmap <A-k> ddkPh 
 " Create a tab
-" nmap te :tabe<CR>
-
+nmap <leader>t :tabe<CR>
 " Delete a buffer
-" nmap td :bd<CR>
-
+nmap <leader>td :bd<CR>
 " Create splits
-" nmap th :split<CR>
-" nmap tv :vsplit<CR>
-
+nmap <leader>th :split<CR>
+nmap <leader>tv :vsplit<CR>
 " Close splits and others
-" nmap tt :q<CR>
-
-" Call command shortcut
-" nmap tc :!
+nmap <leader>tt :q<CR>
+" Save
+nmap <c-s> :w<CR>
 
 syntax on            " Enable syntax highlight
 set number               " Enable line numbers
@@ -108,11 +105,12 @@ set mouse=a          " Enable mouse support
 filetype on          " Detect and set the filetype option and trigger the FileType Event
 filetype plugin on   " Load the plugin file for the file type, if any
 filetype indent on   " Load the indent file for the file type, if any
-set relativenumber
+" set relativenumber
 set inccommand=split
 set sidescroll=1
 set cursorline
 set completeopt=noinsert,menuone,noselect
+set nohlsearch 
 
 let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
 let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
@@ -120,61 +118,32 @@ let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
 "
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
     " found' messages
-    set shortmess+=c
+    " set shortmess+=c
 
     " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    inoremap <c-c> <ESC>
+    " inoremap <c-c> <ESC>
 
     " When the <Enter> key is pressed while the popup menu is visible, it only
     " hides the menu. Use this mapping to close the menu and also start a new
     " line.
-    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+    " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
     " Use <TAB> to select the popup menu:
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"====VIM-TAGS CONFIG ==================================
+" set tags=./tags,tags;
+" set autochdir
+" set exrc
+" set secure
+" let g:vim_tags_auto_generate = 1
 
 " ========= COMMENTER =================================
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 map cc <Plug>NERDCommenterInvert
 map cs <Plug>NERDCommenterSexy
-
-let g:loaded_python3_provider = 0
-" ========== COC ======================================== 
-
-" Coc Snippets """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-" xmap <leader>x  <Plug>(coc-convert-snippet)
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 if (has("nvim"))
     " Telescope """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -225,6 +194,7 @@ endfunction
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
+
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
