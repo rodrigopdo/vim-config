@@ -3,31 +3,24 @@ Plug 'morhetz/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
-
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'szw/vim-tags'
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-easytags'
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
 " Plug 'ncm2/ncm2'
 " Plug 'roxma/nvim-yarp' 
 " Plug 'ncm2/ncm2-tern',  {'do': }
 Plug 'jiangmiao/auto-pairs'
 Plug 'honza/vim-snippets'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
 Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
 Plug 'vwxyutarooo/nerdtree-devicons-syntax'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-
 Plug 'neoclide/coc.nvim' , { 'branch' : 'release' }
 Plug 'powerline/powerline'
 Plug 'Yggdroot/indentLine'
@@ -46,24 +39,27 @@ let g:airline_powerline_fonts = 1
 
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
-nnoremap <leader>ev :vsplit ~/.config/nvim/init.vim<cr>
-nnoremap <leader>sv :source ~/.config/nvim/init.vim<cr>
 nnoremap <c-p> :Files<cr>
-nnoremap <c-f> :Ag<space><cr>
-nmap <c-a> :NERDTreeToggle<cr>
+nnoremap <leader>ag :Ag<space><cr>
+nmap <leader>b :NERDTreeToggle<cr>
 
-" Shortcuts for split navigation
+" ========= COMMENTER =================================
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+map cc <Plug>NERDCommenterInvert
+map cs <Plug>NERDCommenterSexy
+
+" Split navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <leader>h :bp<cr>
-map <leader>l :bn<cr>
-
-" Adding an empty line below, above and below with insert
-nmap <leader>j o<Esc>k
-nmap <leader>k O<Esc>j
-
+" Tab Navigation
+map <S-h> :bp<cr>
+map <S-l> :bn<cr>
+" Adding an empty line below, above 
+nmap <S-u> O<Esc>j
+nmap <S-j> o<Esc>k
 "Moving line up and down
 nmap <A-j> ddph 
 nmap <A-k> ddkPh 
@@ -76,11 +72,10 @@ nmap <leader>th :split<CR>
 nmap <leader>tv :vsplit<CR>
 " Close splits and others
 nmap <leader>tt :q<CR>
-" Save
-nmap <c-s> :w<CR>
 
 syntax on            " Enable syntax highlight
-set number               " Enable line numbers
+set number           " Enable line numbers
+set clipboard+=unnamedplus
 set tabstop=2        " Show existing tab with 4 spaces width
 set softtabstop=2    " Show existing tab with 4 spaces width
 set shiftwidth=2     " When indenting with '>', use 4 spaces width
@@ -112,38 +107,10 @@ set cursorline
 set completeopt=noinsert,menuone,noselect
 set nohlsearch 
 set breakindent
+set modifiable
+set write
 let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
 let g:WebDevIconsDisableDefaultFileSymbolColorFromNERDTreeFile = 1
-"=========== AUTOCOMPLETE =================================================
-"
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-    " found' messages
-    " set shortmess+=c
-
-    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    " inoremap <c-c> <ESC>
-
-    " When the <Enter> key is pressed while the popup menu is visible, it only
-    " hides the menu. Use this mapping to close the menu and also start a new
-    " line.
-    " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-    " Use <TAB> to select the popup menu:
-    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"====VIM-TAGS CONFIG ==================================
-" set tags=./tags,tags;
-" set autochdir
-" set exrc
-" set secure
-" let g:vim_tags_auto_generate = 1
-
-" ========= COMMENTER =================================
-let g:NERDSpaceDelims = 1
-let g:NERDDefaultAlign = 'left'
-map cc <Plug>NERDCommenterInvert
-map cs <Plug>NERDCommenterSexy
 
 if (has("nvim"))
     " Telescope """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,11 +159,11 @@ function! CheckBackspace() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" if has('nvim')
+  " inoremap <silent><expr> <c-space> coc#refresh()
+" else
+  " inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -227,8 +194,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!

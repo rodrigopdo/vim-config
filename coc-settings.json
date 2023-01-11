@@ -2,5 +2,7 @@
     "languageserver": {
 
     },
-    "snippets.ultisnips.pythonPrompt": false
+    "snippets.ultisnips.pythonPrompt": false,
+    // "diagnostic.enable": false
+    "javascript.suggestionActions.enabled": false
 }
