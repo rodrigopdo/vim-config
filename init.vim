@@ -27,8 +27,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'preservim/nerdcommenter'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'voldikss/vim-floaterm'
 call plug#end()
-
+.
 "======= THEMES ====================================
 colorscheme dracula 
 set background=dark
@@ -64,14 +65,16 @@ nmap <S-j> o<Esc>k
 nmap <A-j> ddph 
 nmap <A-k> ddkPh 
 " Create a tab
-nmap <leader>t :tabe<CR>
+" nmap <leader>t :tabe<CR>
 " Delete a buffer
 nmap <leader>td :bd<CR>
 " Create splits
 nmap <leader>th :split<CR>
 nmap <leader>tv :vsplit<CR>
 " Close splits and others
-nmap <leader>tt :q<CR>
+" nmap <leader>tt :q<CR>
+
+nmap <C-t> :FloatermNew --width=0.7 --height=0.7<CR>
 
 syntax on            " Enable syntax highlight
 set number           " Enable line numbers
