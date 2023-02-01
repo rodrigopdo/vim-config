@@ -5,13 +5,6 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'ludovicchabant/vim-gutentags'
-" Plug 'szw/vim-tags'
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-easytags'
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp' 
-" Plug 'ncm2/ncm2-tern',  {'do': }
 Plug 'jiangmiao/auto-pairs'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
@@ -28,10 +21,11 @@ Plug 'preservim/nerdcommenter'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'voldikss/vim-floaterm'
+" Plug 'dense-analysis/ale'
 call plug#end()
-.
 "======= THEMES ====================================
-colorscheme dracula 
+colorscheme gruvbox 
+
 set background=dark
 let g:airline_theme='violet'
 let g:airline#extensions#tabline#enabled = 1
@@ -39,11 +33,16 @@ let g:airline_powerline_fonts = 1
 "======= REMAPS ====================================
 
 let mapleader="\<space>"
+" Complete end of line with ';'
 nnoremap <leader>; A;<esc>
+" Complete end of line with ','
+nnoremap <leader>, A,<esc>
 nnoremap <c-p> :Files<cr>
+" Silver Search
 nnoremap <leader>ag :Ag<space><cr>
 nmap <leader>b :NERDTreeToggle<cr>
 
+nnoremap <C-a> ggvG
 " ========= COMMENTER =================================
 let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
@@ -73,8 +72,9 @@ nmap <leader>th :split<CR>
 nmap <leader>tv :vsplit<CR>
 " Close splits and others
 " nmap <leader>tt :q<CR>
-
+" Open Terminal
 nmap <C-t> :FloatermNew --width=0.7 --height=0.7<CR>
+vmap <C-t> :FloatermNew --width=0.7 --height=0.7<CR>
 
 syntax on            " Enable syntax highlight
 set number           " Enable line numbers
@@ -285,8 +285,5 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-
-
 
 
